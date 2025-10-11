@@ -1,0 +1,133 @@
+﻿@page "{id:int}"
+@model devNoter.Pages.Notes.GetAllNotesModel
+@{
+}
+<!--Folders in Folder-->
+<div class="row mb-4 align-items-center">
+    <div class="col">
+        <h2>Folders in: <span class="text-dark">@Model.Folder.Name</span></h2>
+    </div>
+</div>
+<div class="row mb-4 align-items-center">
+    <div class="col-auto">
+        <button class="btn btn-success"
+        data-bs-toggle="modal"
+        data-bs-target="#createChildFolderModalInFolder-@Model.Folder.Id">
+            + Create New Folder
+        </button>
+    </div>
+
+    <!-- Create Child Folder Modal In Folder -->
+    <div class="modal fade" id="createChildFolderModalInFolder-@Model.Folder.Id" tabindex="-1"
+    aria-labelledby="createChildFolderModalInFolderLabel-@Model.Folder.Id" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" asp-page="/LanguageFolder/CreateLanguageFolder">
+                    <input type="hidden" name="LanguageFolder.ParentFolderId" value="@Model.Folder.Id" />
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold" id="createChildFolderModalInFolderLabel-@Model.Folder.Id">
+                            Create A New Folder For Folder: @Model.Folder.Name
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="LanguageFolder_Name" class="form-label">Folder Name</label>
+                            <input type="text" id="LanguageFolder_Name" name="LanguageFolder.Name" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@* <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var child in Model.Folder.ChildFolders)
+        {
+            <p>@child</p>
+            @await Html.PartialAsync("_FolderItem", child)
+            
+        }
+    <p>@Model.Folder</p>
+
+</div> *@
+<!--Notes-->
+<div class="row mb-4 align-items-center">
+    <div class="col">
+        <h2>Notes in Folder: <span class="text-dark">@Model.Folder.Name</span></h2>
+    </div>
+</div>
+<div class="row mb-4 align-items-center">
+    <div class="col-auto">
+        <a asp-page="/Notes/CreateNote" asp-route-Id="@Model.Folder.Id" class="btn btn-success">
+            + Create New Note
+        </a>
+    </div>
+</div>
+
+@if (Model.Notes == null || !Model.Notes.Any())
+{
+    <div class="alert alert-info" role="alert">
+        <p>No notes found in this folder.</p>
+    </div>
+    
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var note in Model.Notes)  
+        {
+            <div class="col">
+                <div class="card shadow-sm">
+                    <a asp-page="/Notes/GetNote" asp-route-id="@note.Id" class="link-offset-2 link-underline link-underline-opacity-0 text-black">
+                        <div class="card-body">
+                            <h5 class="card-title text-capitalize">@note.Title</h5>
+                            <p class="card-text card-text-truncate">@note.Content</p>
+                        </div>
+                    </a>
+                    <div class="card-footer text-muted">
+                        Created: @note.CreatedAt.ToString("dd/MM/yyyy")
+                        <br />
+                        Updated: @note.UpdatedAt.ToString("dd/MM/yyyy")
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <!-- Delete Button triggers this Note's modal -->
+                            <button class="btn btn-sm btn-outline-danger ms-auto" data-bs-toggle="modal" data-bs-target="#deleteNoteModal-@note.Id">
+                                - Delete Note
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal for Delete Note -->
+            <div class="modal fade" id="deleteNoteModal-@note.Id" tabindex="-1" aria-labelledby="deleteNoteModal-@note.Id" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form method="post" asp-page="/Notes/DeleteNote">
+                            <div class="modal-header">
+                                <h5 class="modal-title fw-bold" id="deleteNoteModal-@note.Id">Delete Note</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <p class="fw-bold text-danger">Are you sure you want to delete <strong>@note.Title</strong>?</p>
+                                <input type="hidden" name="Id" value="@note.Id" />
+                                <input type="hidden" name="LanguageFolderId" value="@note.LanguageFolderId" />
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    
+}

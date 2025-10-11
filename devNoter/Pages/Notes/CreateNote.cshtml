@@ -1,0 +1,43 @@
+﻿@page
+@model devNoter.Pages.Notes.CreateNoteModel
+@{
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+        <h2 class="mb-4">Create a New Note</h2>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+        <form method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label asp-for="Note.Title" class="form-label">Title</label>
+                <input asp-for="Note.Title" class="form-control" placeholder="Enter note title"/>
+                <span asp-validation-for="Note.Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Note.Content" class="form-label">Content</label>
+                <textarea asp-for="Note.Content" class="form-control" rows="5" placeholder="Enter note content"></textarea>
+                <span asp-validation-for="Note.Content" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Note.CodeContext" class="form-label">Code Context</label>
+                <textarea id="editor" name="Code" asp-for="Note.CodeContext" class="form-control" rows="5">@Model.Note.CodeContext</textarea>
+                <span asp-validation-for="Note.CodeContext" class="text-danger"></span>
+            </div>
+
+            <!-- Billedupload -->
+            <div class="mb-3">
+                <label for="ImageFile" class="form-label">Upload Image (jpg, png, gif)</label>
+                <input type="file" name="ImageFiles" class="form-control" multiple />
+            </div>
+
+            <input type="hidden" asp-for="LanguageFolderId" />
+
+            <button type="submit" class="btn btn-success">Create Note</button>
+            <a asp-page="./GetAllNotes" asp-route-id="@Model.LanguageFolderId" class="btn btn-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</div>

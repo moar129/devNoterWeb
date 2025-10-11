@@ -1,0 +1,83 @@
+﻿@page
+@model devNoter.Areas.Identity.Pages.Account.Manage.IndexModel
+@{
+    ViewData["Title"] = "Manage Account";
+}
+
+
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Username (readonly) -->
+            <div class="form-floating mb-3">
+                <input asp-for="Username" class="form-control" disabled />
+                <label asp-for="Username"></label>
+            </div>
+
+            <!-- Current password -->
+            <div class="form-floating mb-3">
+                <input asp-for="Input.OldPassword" class="form-control" autocomplete="current-password" />
+                <label asp-for="Input.OldPassword"></label>
+                <span asp-validation-for="Input.OldPassword" class="text-danger"></span>
+            </div>
+
+            <!-- New password -->
+            <div class="form-floating mb-3">
+                <input asp-for="Input.NewPassword" class="form-control" autocomplete="new-password" />
+                <label asp-for="Input.NewPassword"></label>
+                <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
+            </div>
+
+            <!-- Confirm new password -->
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" />
+                <label asp-for="Input.ConfirmPassword"></label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="w-100 btn btn-lg btn-success">Save changes</button>
+        </form>
+    </div>
+</div>
+
+ <!-- Trigger button for Deleting Account -->
+ <div class="col-12 mt-5">
+    <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+        Delete Account
+    </button>
+    <!-- Modal for Delete Account -->
+    <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" asp-area="Identity" asp-page="/Account/DeleteAccount">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold" id="deleteAccountModalLabel">Delete Account</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <p class="fw-bold text-danger">
+                            Are you sure you want to delete your <strong>account</strong>?<br />
+                            All your folders, notes and uploaded files will be permanently removed.<br />
+                            <span class="text-muted">This action cannot be undone.</span>
+                        </p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

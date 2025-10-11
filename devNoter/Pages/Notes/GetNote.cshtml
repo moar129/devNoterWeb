@@ -1,0 +1,48 @@
+﻿@page "{id:int}"
+@model devNoter.Pages.Notes.GetNoteModel
+@{
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+        <div class="card-body">
+            <h2 class="card-title mb-4 text-center">@Model.Note.Title</h2>
+            <!-- Content -->
+            <div class="mb-3">
+                <h6>Content</h6>
+                @* <label asp-for="Note.Content" class="form-label">Content</label> *@
+                <textarea asp-for="Note.Content" class="form-control" rows="8" placeholder="Enter note content" readonly></textarea>
+            </div>
+
+            <!-- Code Context -->
+            <div class="view-note mb-3">
+                <h6>Code Context</h6>
+                <textarea id="editor" name="Code" rows="5">@Model.Note.CodeContext</textarea>
+            </div>
+            @if (Model.Note.ImagePaths != null && Model.Note.ImagePaths.Count > 0)
+            {
+                <div class="mb-3">
+                    <h4>Billeder</h4>
+                    <div class="row">
+                        @foreach (var imgPath in Model.Note.ImagePaths)
+                        {
+                            int billedeNummmer = 1;
+                            <div class="col-6 col-md-4 mb-3">
+                                <img src="@imgPath" class="img-fluid rounded" alt="Note Image:@Model.Note.Title - @billedeNummmer" />
+                            </div>
+                            billedeNummmer++;
+                        }
+                    </div>
+                </div>
+            }
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <a asp-page="/Notes/UpdateNote" asp-route-id="@Model.Note.Id" class="btn btn-primary">
+                    Edit Note
+                </a>
+                <!-- Buttons -->
+                <div class="d-flex justify-content-between">
+                    <a asp-page="./GetAllNotes" asp-route-id="@Model.Note.LanguageFolderId" class="btn btn-secondary">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

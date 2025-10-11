@@ -1,0 +1,76 @@
+﻿@page
+@model devNoter.Pages.Notes.UpdateNoteModel
+@{
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title mb-4 text-center">Update Note</h2>
+
+                <form method="post" enctype="multipart/form-data">
+                    <!-- Title -->
+                    <div class="mb-3">
+                        <label asp-for="Note.Title" class="form-label">Title</label>
+                        <input asp-for="Note.Title" class="form-control" placeholder="Enter note title" required />
+                        <span asp-validation-for="Note.Title" class="text-danger"></span>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="mb-3">
+                        <label asp-for="Note.Content" class="form-label">Content</label>
+                        <textarea asp-for="Note.Content" class="form-control" rows="8" placeholder="Enter note content" required></textarea>
+                        <span asp-validation-for="Note.Content" class="text-danger"></span>
+                    </div>
+
+                    <!-- Code Context -->
+                    <div class="mb-3">
+                        <label asp-for="Note.CodeContext" class="form-label">Code Context</label>
+                        <textarea id="editor" name="Code" asp-for="Note.CodeContext" class="form-control" rows="5">@Model.Note.CodeContext</textarea>
+                        <span asp-validation-for="Note.CodeContext" class="text-danger"></span>
+                    </div>
+
+                    <!-- Upload nye billeder -->
+                    <div class="mb-3">
+                        <label for="ImageFiles" class="form-label">Upload Images (jpg, png, gif)</label>
+                        <input type="file" name="ImageFiles" class="form-control" multiple />
+                    </div>
+
+                    <!-- Vis eksisterende billeder med fjern checkbox -->
+                    @if (Model.Note.ImagePaths != null && Model.Note.ImagePaths.Count > 0)
+                    {
+                        <div class="mb-3">
+                            <h5>Existing Images</h5>
+                            <div class="row" id="imageContainer">
+                                @foreach (var img in Model.Note.ImagePaths)
+                                {
+                                    <div class="col-6 col-md-4 col-lg-3 mb-3 position-relative image-card" data-img="@img">
+                                        <div class="card">
+                                            <img src="@img" class="card-img-top img-fluid rounded" />
+                                            <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1 remove-btn">
+                                                &times;
+                                            </button>
+                                        </div>
+                                        <input type="hidden" name="RemoveImages" value="" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Hidden Note ID -->
+                    <input type="hidden" asp-for="Note.Id" />
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-success">Update Note</button>
+                        <a asp-page="./GetAllNotes" asp-route-id="@Model.Note.LanguageFolderId" class="btn btn-secondary">Cancel</a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+

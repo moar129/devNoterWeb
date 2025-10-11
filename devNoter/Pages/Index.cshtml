@@ -1,0 +1,88 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-12 col-md-10 col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">Welcome to <span class="text-danger">devNoter</span></h1>
+                <p class="lead text-muted">
+                    Organize your ideas, code, and images all in one simple and powerful place.
+                </p>
+                <a class="btn btn-primary btn-lg mt-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#createFolderModal">🚀 Create your first folder</a>
+                <!-- Informative text about needing a folder first -->
+                <p class="mt-4 text-warning ">
+                     You need to create a folder before you can start adding notes to the folder.
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 shadow-sm border-0 hover-shadow transition">
+                    <div class="card-body text-center">
+                        <div class="fs-1 mb-3">📂</div>
+                        <h5 class="fw-bold">Create Folders</h5>
+                        <p class="text-muted">Keep your notes neatly organized in folders.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 shadow-sm border-0 hover-shadow transition">
+                    <div class="card-body text-center">
+                        <div class="fs-1 mb-3">📝</div>
+                        <h5 class="fw-bold">Write Notes</h5>
+                        <p class="text-muted">Add text, thoughts, and project details with ease.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 shadow-sm border-0 hover-shadow transition">
+                    <div class="card-body text-center">
+                        <div class="fs-1 mb-3">💻</div>
+                        <h5 class="fw-bold">Insert Code</h5>
+                        <p class="text-muted">Save and format your code snippets inside notes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 shadow-sm border-0 hover-shadow transition">
+                    <div class="card-body text-center">
+                        <div class="fs-1 mb-3">🖼️</div>
+                        <h5 class="fw-bold">Upload Images</h5>
+                        <p class="text-muted">Enhance your notes with screenshots or diagrams.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <!-- Fallback for non-logged-in users -->
+    <div class="d-flex align-items-center justify-content-center vh-100 bg-black text-white text-center">
+        <div>
+            <h1 class="display-5 mb-3">You must be logged in to access devNoter</h1>
+            <a asp-page="/Account/Login" asp-area="Identity" class="btn btn-light btn-lg">Login</a>
+        </div>
+    </div>
+}
+<style>
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15) !important;
+        transition: 0.3s ease-in-out;
+    }
+
+    .transition {
+        transition: all 0.3s ease-in-out;
+    }
+</style>
+
+

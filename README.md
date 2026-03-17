@@ -39,8 +39,7 @@ Følgende NuGet-pakker er installeret i projektet (du behøver muligvis ikke dem
 6. Kør projektet i Development-miljø
 
 ## Opdateringer
-Projektet vedligeholdes løbende, og hjemmesiden forventes opdateret cirka én gang om ugen med forbedringer og nye funktioner.
-
+Projektet vedligeholdes ikke længere
 ## Bidrag
 Har du forslag eller finder fejl?
 * Åbn et issue
